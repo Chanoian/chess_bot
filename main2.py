@@ -6,7 +6,7 @@ from chess_engine import ChessEngine
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Games.site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-engine_path = "/home/builder/chess_bot_gcloud/stockfish-11-linux/Linux/stockfish_20011801_x64"
+engine_path = "./stockfish_20011801_x64"
 db = SQLAlchemy(app)
 PIECE_COLOR = ['white', 'black']
 chess_engine = ChessEngine(engine_path=engine_path)
