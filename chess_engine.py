@@ -36,6 +36,12 @@ class ChessEngine(object):
         else:
             return ''
 
+    def return_valid_moves(self, board):
+        valid_moves = []
+        for move in board.legal_moves:
+            valid_moves.append(move)
+        return valid_moves
+
     def revert_two_moves(self, board):
         try:
             board.pop()
@@ -48,3 +54,4 @@ class ChessEngine(object):
         result = self.engine.play(board, chess.engine.Limit(time=STOCK_FISH_LEVEL[int(engine_level)]))
         board.push(result.move)
         return result.move, board
+        
