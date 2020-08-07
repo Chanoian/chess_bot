@@ -1,41 +1,64 @@
 import random
-from flask_sqlalchemy import SQLAlchemy
+import os
+from sqlalchemy import engine, create_engine, Column, Integer, String, PickleType, VARCHAR
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 from flask import Flask, request, jsonify
 from chess_engine import ChessEngine
 
+Base = declarative_base()
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Games.site.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-engine_path = "./stockfish_20011801_x64"
-db = SQLAlchemy(app)
+db_user = 'root_sql_db'
+db_password = 'chesstoremember'
+db_name = 'chess_games'
+cloud_sql_connection_name = 'chess-bot-cloud-run:us-central1:sql-instance'
+db_socket_dir = '/cloudsql'
+stockfish_engine_path = "./stockfish_20011801_x64"
 sql_pass = 'oO4EPbGwF5tiCH0e'
-
-sql_root_user='root_sql_db'
-sql_root_user_pass='chesstoremember'
+db_config = {
+        "pool_size": 5,
+        "max_overflow": 2,
+        "pool_timeout": 30,
+        "pool_recycle": 1800,
+}
 PIECE_COLOR = ['white', 'black']
-chess_engine = ChessEngine(engine_path=engine_path)
+chess_engine = ChessEngine(engine_path=stockfish_engine_path)
 
 
-class Games(db.Model):
-    _id = db.Column("id", db.Integer, primary_key=True)
-    session_url = db.Column(db.String, unique=True, nullable=False)
-    board = db.Column(db.PickleType(), unique=True, nullable=False)
-    player_color = db.Column(db.String, unique=False, nullable=False)
-    engine_level = db.Column(db.Integer, unique=False, nullable=False)
-
-    def __init__(self, session_url, board, player_color, engine_level):
-        self.session_url = session_url
-        self.board = board
-        self.player_color = player_color
-        self.engine_level = engine_level
+class Games(Base):
+    __tablename__ = "game"
+    _id = Column("id", Integer, primary_key=True)
+    session_url = Column(VARCHAR(200), unique=True, nullable=False)
+    board = Column(PickleType(), nullable=False)
+    player_color = Column(VARCHAR(20), unique=False, nullable=False)
+    engine_level = Column(Integer, unique=False, nullable=False)
 
 
-db.create_all()
+db_socket_dir = os.environ.get("DB_SOCKET_DIR", "/cloudsql")
+pool = create_engine(
+    # Equivalent URL:
+    # mysql+pymysql://<db_user>:<db_pass>@/<db_name>?unix_socket=<socket_path>/<cloud_sql_instance_name>
+    engine.url.URL(
+        drivername="mysql+pymysql",
+        username=db_user,  # e.g. "my-database-user"
+        password=db_password,  # e.g. "my-database-password"
+        database=db_name,  # e.g. "my-database-name"
+        query={
+            "unix_socket": "{}/{}".format(
+                db_socket_dir,  # e.g. "/cloudsql"
+                cloud_sql_connection_name)  # i.e "<PROJECT-NAME>:<INSTANCE-REGION>:<INSTANCE-NAME>"
+        }
+    ),
+    **db_config
+)
+
+Base.metadata.create_all(bind=pool)
+Session = sessionmaker(bind=pool)
 
 
 @app.route('/')
 def helloWorld():
-    return 'Hello, World'
+    return 'It Works !!'
 
 
 @app.route('/api/v1/assistant', methods=['POST'])
@@ -60,7 +83,7 @@ def processDialogFlowData(json_payload):
     """
     action = json_payload["queryResult"]["action"]
     parameters = json_payload["queryResult"]["parameters"]
-    session_url = json_payload["session"]                                                                                                                                                                         
+    session_url = json_payload["session"]                                                                                                                                                                       
     return action, parameters, session_url
 
 
@@ -68,8 +91,10 @@ def get_board_from_session_url(session_url):
     """
     """
     try:
-        game = db.session.query(Games).filter(Games.session_url == session_url).first()
+        session = Session()
+        game = session.query(Games).filter(Games.session_url == session_url).first()
         board = game.board
+        session.close()
     except AttributeError:
         return False
     return board
@@ -77,8 +102,10 @@ def get_board_from_session_url(session_url):
 
 def get_engine_level_from_the_data_base(session_url):
     try:
-        game = db.session.query(Games).filter(Games.session_url == session_url).first()
+        session = Session()
+        game = session.query(Games).filter(Games.session_url == session_url).first()
         engine_level = game.engine_level
+        session.close()
     except AttributeError:
         return False
     return engine_level
@@ -86,9 +113,10 @@ def get_engine_level_from_the_data_base(session_url):
 
 def update_board_in_data_base(session_url, new_board):
     try:
-        game = db.session.query(Games).filter(Games.session_url == session_url).first()
+        session = Session()
+        game = session.query(Games).filter(Games.session_url == session_url).first()
         game.board = new_board
-        db.session.commit()
+        session.commit()
     except AttributeError:
         return False
     return True
@@ -96,9 +124,11 @@ def update_board_in_data_base(session_url, new_board):
 
 def delete_row_in_database(session_url):
     try:
-        game = db.session.query(Games).filter(Games.session_url == session_url).first()
-        db.session.delete(game)
-        db.session.commit()
+        session = Session()
+        game = session.query(Games).filter(Games.session_url == session_url).first()
+        session.delete(game)
+        session.commit()
+        session.close()
     except:
         return False
     return True
@@ -202,9 +232,11 @@ def CreateGame(parameters, session_url):
     engine_level = parameters['Level'] if parameters['Level'] else 5
     board = chess_engine.create_game()
     delete_row_in_database(session_url=session_url)  # delete if exists in database
-    game = Games(session_url, board, player_color, engine_level)
-    db.session.add(game)
-    db.session.commit()
+    game = Games(session_url=session_url, board=board, engine_level=engine_level, player_color=player_color)
+    session = Session()
+    session.add(game)
+    session.commit()
+    session.close()
     if player_color == 'black':
         engine_move, engine_board = chess_engine.let_the_engine_play(engine_level=engine_level, board=board)
         update_board_in_data_base(session_url=session_url, new_board=engine_board)
