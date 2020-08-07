@@ -1,6 +1,6 @@
 import random
 import os
-from sqlalchemy import engine, create_engine, Column, Integer, String, PickleType, VARCHAR
+from sqlalchemy import engine, create_engine, Column, Integer, PickleType, VARCHAR
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from flask import Flask, request, jsonify
