@@ -1,21 +1,22 @@
 import chess
 import chess.engine
+from stockfish import Stockfish
 
-STOCK_FISH_LEVEL = {1: 0.01,
-                    2: 0.02,
-                    3: 0.03,
-                    4: 0.04,
-                    5: 0.05,
-                    6: 0.06,
-                    7: 0.07,
-                    8: 0.08,
-                    9: 0.09,
-                    10: 1}
+STOCK_FISH_LEVEL = {1: 1,
+                    2: 4,
+                    3: 6,
+                    4: 8,
+                    5: 10,
+                    6: 12,
+                    7: 14,
+                    8: 16,
+                    9: 18,
+                    10: 20}
 
 
 class ChessEngine(object):
     def __init__(self, engine_path):
-        self.engine = chess.engine.SimpleEngine.popen_uci(engine_path)
+        self.stockfish = Stockfish(engine_path)
 
     def create_game(self):
         board = chess.Board()
@@ -29,10 +30,10 @@ class ChessEngine(object):
         return board
 
     def validate_board_status(self, board):
-        if board.is_check():
-            return 'Check'
-        elif board.is_checkmate():
+        if board.is_checkmate():
             return 'Checkmate'
+        elif board.is_check():
+            return 'Check'
         else:
             return ''
 
@@ -51,7 +52,8 @@ class ChessEngine(object):
         return board
 
     def let_the_engine_play(self, engine_level, board):
-        result = self.engine.play(board, chess.engine.Limit(time=STOCK_FISH_LEVEL[int(engine_level)]))
-        board.push(result.move)
-        return result.move, board
-        
+        self.stockfish.set_skill_level(STOCK_FISH_LEVEL[int(engine_level)])
+        self.stockfish.set_fen_position(board.fen())
+        move = self.stockfish.get_best_move_time(1000)
+        board.push(chess.Move.from_uci(move))
+        return move, board
