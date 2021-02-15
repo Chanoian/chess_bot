@@ -186,7 +186,7 @@ def resignGame(session_url):
 
 
 def makeMove(parameters, session_url):
-    board = parameters['Board']
+    board = parameters['Moves']
     piece = parameters['ChessPiece']
     special_move = parameters['Specialmoves']
     if special_move == 'short_castle':

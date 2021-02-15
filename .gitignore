@@ -3,3 +3,4 @@
 /stockfish-11-linux
 *.db
 *.token
+chess_notation.txt

@@ -1,0 +1,519 @@
+{
+  "isRegexp": false,
+  "isEnum": false,
+  "allowFuzzyExtraction": false,
+  "name": "Moves",
+  "automatedExpansion": false,
+  "entries": [{
+      "value": "a",
+      "synonyms": [
+        "Alex",
+        "Anna"
+      ]
+    },
+    {
+      "value": "b",
+      "synonyms": [
+        "Bobby",
+        "Belia",
+        "Bela"
+      ]
+    },
+    {
+      "value": "c",
+      "synonyms": [
+        "Carlsen",
+        "Caesar"
+      ]
+    },
+    {
+      "value": "d",
+      "synonyms": [
+        "Ding",
+        "David"
+      ]
+    },
+    {
+      "value": "e",
+      "synonyms": [
+        "Evans",
+        "Eva"
+      ]
+    },
+    {
+      "value": "f",
+      "synonyms": [
+        "Fisher",
+        "Fischer",
+        "Felix"
+      ]
+    },
+    {
+      "value": "g",
+      "synonyms": [
+        "Gary",
+        "Gustav"
+      ]
+    },
+    {
+      "value": "h",
+      "synonyms": [
+        "Hikaru",
+        "Hector"
+      ]
+    },
+    {
+      "value": "a1",
+      "synonyms": [
+        "Alex One",
+        "Anna One"
+      ]
+    },
+    {
+      "value": "a2",
+      "synonyms": [
+        "Alex two",
+        "Anna two"
+      ]
+    },
+    {
+      "value": "a3",
+      "synonyms": [
+        "Alex 3",
+        "Anna 3"
+      ]
+    },
+    {
+      "value": "a4",
+      "synonyms": [
+        "Alex 4",
+        "Anna 4"
+      ]
+    },
+    {
+      "value": "a5",
+      "synonyms": [
+        "Alex five",
+        "Anna five"
+      ]
+    },
+    {
+      "value": "a6",
+      "synonyms": [
+        "Alex six",
+        "Anna six"
+      ]
+    },
+    {
+      "value": "a7",
+      "synonyms": [
+        "Alex seven",
+        "Anna seven"
+      ]
+    },
+    {
+      "value": "a1",
+      "synonyms": [
+        "Alex eight",
+        "Anna eight"
+      ]
+    },
+    {
+      "value": "b2",
+      "synonyms": [
+        "Bobby Two",
+        "Belia Two",
+        "Bela 2"
+      ]
+    },
+    {
+      "value": "b3",
+      "synonyms": [
+        "Bobby Three",
+        "Belia Three",
+        "Bela 3"
+      ]
+    },
+    {
+      "value": "b4",
+      "synonyms": [
+        "Bobby Four",
+        "Belia Four",
+        "Bela 4"
+      ]
+    },
+    {
+      "value": "b5",
+      "synonyms": [
+        "Bobby Five",
+        "Belia Five",
+        "Bela 5"
+      ]
+    },
+    {
+      "value": "b6",
+      "synonyms": [
+        "Bobby Six",
+        "Belia Six",
+        "Bela 6"
+      ]
+    },
+    {
+      "value": "b7",
+      "synonyms": [
+        "Bobby Seven",
+        "Belia Seven",
+        "Bela 7"
+      ]
+    },
+    {
+      "value": "b8",
+      "synonyms": [
+        "Bobby Eight",
+        "Belia 8",
+        "Bela 8"
+      ]
+    },
+    {
+      "value": "c1",
+      "synonyms": [
+        "Carlsen one",
+        "Caesar 1 ",
+        "Caesar 1"
+      ]
+    },
+    {
+      "value": "c2",
+      "synonyms": [
+        "Carlsen Two",
+        "Caesar Two",
+        "Carlsen 2"
+      ]
+    },
+    {
+      "value": "c3",
+      "synonyms": [
+        "Carlsen Three",
+        "Caesar Three",
+        "Caesar 3"
+      ]
+    },
+    {
+      "value": "c4",
+      "synonyms": [
+        "Carlsen Four",
+        "Caesar Four"
+      ]
+    },
+    {
+      "value": "c5",
+      "synonyms": [
+        "Carlsen five",
+        "Caesar 5"
+      ]
+    },
+    {
+      "value": "c6",
+      "synonyms": [
+        "Carlsen six",
+        "Caesar 6"
+      ]
+    },
+    {
+      "value": "c7",
+      "synonyms": [
+        "Carlsen 7",
+        "Caesar seven"
+      ]
+    },
+    {
+      "value": "c8",
+      "synonyms": [
+        "Carlsen eight",
+        "Caesar 8"
+      ]
+    },
+    {
+      "value": "d1",
+      "synonyms": [
+        "Ding 1",
+        "David one"
+      ]
+    },
+    {
+      "value": "d2",
+      "synonyms": [
+        "Ding 2",
+        "David two"
+      ]
+    },
+    {
+      "value": "d3",
+      "synonyms": [
+        "Ding 3",
+        "David three"
+      ]
+    },
+    {
+      "value": "d4",
+      "synonyms": [
+        "Ding 4",
+        "David four"
+      ]
+    },
+    {
+      "value": "d5",
+      "synonyms": [
+        "Ding 5",
+        "David five"
+      ]
+    },
+    {
+      "value": "d6",
+      "synonyms": [
+        "Ding 6",
+        "David six"
+      ]
+    },
+    {
+      "value": "d7",
+      "synonyms": [
+        "Ding 7",
+        "David seven"
+      ]
+    },
+    {
+      "value": "d8",
+      "synonyms": [
+        "Ding 8",
+        "David eight"
+      ]
+    },
+    {
+      "value": "e1",
+      "synonyms": [
+        "Evans 1",
+        "Eva one"
+      ]
+    },
+    {
+      "value": "e2",
+      "synonyms": [
+        "Evans two",
+        "Eva 2"
+      ]
+    },
+    {
+      "value": "e3",
+      "synonyms": [
+        "Evans 3",
+        "Eva three"
+      ]
+    },
+    {
+      "value": "e4",
+      "synonyms": [
+        "Evans four",
+        "Eva 4"
+      ]
+    },
+    {
+      "value": "e5",
+      "synonyms": [
+        "Evans five",
+        "Eva five"
+      ]
+    },
+    {
+      "value": "e6",
+      "synonyms": [
+        "Evans six",
+        "Eva six"
+      ]
+    },
+    {
+      "value": "e7",
+      "synonyms": [
+        "Evans 7",
+        "Eva 7"
+      ]
+    },
+    {
+      "value": "e8",
+      "synonyms": [
+        "Evans 8",
+        "Eva eight"
+      ]
+    },
+    {
+      "value": "f1",
+      "synonyms": [
+        "Fisher 1",
+        "Felix one"
+      ]
+    },
+    {
+      "value": "f2",
+      "synonyms": [
+        "Fisher two",
+        "Felix 2"
+      ]
+    },
+    {
+      "value": "f3",
+      "synonyms": [
+        "Fisher 3",
+        "Felix 3"
+      ]
+    },
+    {
+      "value": "f4",
+      "synonyms": [
+        "Fisher 4",
+        "Felix 4"
+      ]
+    },
+    {
+      "value": "f5",
+      "synonyms": [
+        "Fisher five",
+        "Felix 5"
+      ]
+    },
+    {
+      "value": "f6",
+      "synonyms": [
+        "Fisher 6",
+        "Felix six"
+      ]
+    },
+    {
+      "value": "f7",
+      "synonyms": [
+        "Fisher seven",
+        "Felix 7"
+      ]
+    },
+    {
+      "value": "f8",
+      "synonyms": [
+        "Fisher 8",
+        "Felix eight"
+      ]
+    },
+    {
+      "value": "g1",
+      "synonyms": [
+        "Garry 1",
+        "Gustav one"
+      ]
+    },
+    {
+      "value": "g2",
+      "synonyms": [
+        "Garry 2",
+        "Gustav 2"
+      ]
+    },
+    {
+      "value": "g3",
+      "synonyms": [
+        "Garry 3",
+        "Gustav 3"
+      ]
+    },
+    {
+      "value": "g4",
+      "synonyms": [
+        "Garry 4",
+        "Gustav 4"
+      ]
+    },
+    {
+      "value": "g5",
+      "synonyms": [
+        "Garry five",
+        "Gustav five"
+      ]
+    },
+    {
+      "value": "g6",
+      "synonyms": [
+        "Garry 6",
+        "Gustav 6"
+      ]
+    },
+    {
+      "value": "g7",
+      "synonyms": [
+        "Garry 7",
+        "Gustav 7"
+      ]
+    },
+    {
+      "value": "g8",
+      "synonyms": [
+        "Garry 8",
+        "Gustav eight"
+      ]
+    },
+    {
+      "value": "h1",
+      "synonyms": [
+        "Hikaru 1",
+        "Hector one "
+      ]
+    },
+    {
+      "value": "h2",
+      "synonyms": [
+        "Hikaru 2",
+        "Hector two "
+      ]
+    },
+    {
+      "value": "h3",
+      "synonyms": [
+        "Hikaru 3",
+        "Hector 3"
+      ]
+    },
+    {
+      "value": "h4",
+      "synonyms": [
+        "Hikaru 4",
+        "Hector 4"
+      ]
+    },
+    {
+      "value": "h5",
+      "synonyms": [
+        "Hikaru 5",
+        "Hector 5"
+      ]
+    },
+    {
+      "value": "h6",
+      "synonyms": [
+        "Hikaru 6",
+        "Hector 6"
+      ]
+    },
+    {
+      "value": "h7",
+      "synonyms": [
+        "Hikaru 7",
+        "Hector seven "
+      ]
+    },
+    {
+      "value": "h8",
+      "synonyms": [
+        "Hikaru eight",
+        "Hector 8 "
+      ]
+    }
+  ],
+  "id": "b6cbbad2-e5c7-423a-b1dc-bd73320d1b11",
+  "isOverridable": false
+}
