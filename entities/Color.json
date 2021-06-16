@@ -1,0 +1,21 @@
+[
+    {
+        "value": "white",
+        "synonyms": [
+            "white"
+        ]
+    },
+    {
+        "value": "black",
+        "synonyms": [
+            "black",
+            "dark"
+        ]
+    },
+    {
+        "value": "random",
+        "synonyms": [
+            "random"
+        ]
+    }
+]

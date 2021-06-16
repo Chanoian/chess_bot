@@ -55,9 +55,21 @@ pool = create_engine(
 Base.metadata.create_all(bind=pool)
 Session = sessionmaker(bind=pool)
 
+CHESS_PIECES = dict(N='Knight', B='Bishop', R='Rook', Q='Queen', K='King')
+MOVES = dict(a1='Alex One', a2='Alex Two', a3='Alex Three', a4='Alex Four', a5='Alex Five', a6='Alex Six', a7='Alex Seven', a8='Alex Eight',
+                b1='Bobby One', b2='Bobby Two', b3='Bobby Three', b4='Bobby Four', b5='Bobby Five', b6='Bobby Six', b7='Bobby Seven', b8='Bobby Eight', 
+                c1='Carlsen One', c2='Carlsen Two', c3='Carlsen Three', c4='Carlsen Four', c5='Carlsen Five', c6='Carlsen Six', c7='Carlsen Seven', c8='Carlsen Eight',
+                d1='Ding One', d2='Ding Two', d3='Ding Three', d4='Ding Four', d5='Ding Five', d6='Ding Six', d7='Ding Seven', d8='Ding Eight',
+                e1='Evans One', e2='Evans Two', e3='Evans Three', e4='Evans Four', e5='Evans Five', e6='Evans Six', e7='Evans Seven', e8='Evans Eight',
+                f1='Fisher One', f2='Fisher Two', f3='Fisher Three', f4='Fisher Four', f5='Fisher Five', f6='Fisher Six', f7='Fisher Seven', f8='Fisher Eight',
+                g1='Garry One', g2='Garry Two', g3='Garry Three', g4='Garry Four', g5='Garry Five', g6='Garry Six', g7='Garry Seven', g8='Garry Eight',
+                h1='Hikaru One', h2='Hikaru Two', h3='Hikaru Three', h4='Hikaru Four', h5='Hikaru Five', h6='Hikaru Six', h7='Hikaru Seven', h8='Hikaru Eight')
+
+
+
 
 @app.route('/')
-def helloWorld():
+def test():
     return 'It Works !!'
 
 
@@ -134,21 +146,25 @@ def delete_row_in_database(session_url):
     return True
 
 
-def move_generator(piece, board):
-    if len(board) == 1:
+def move_generator(piece, move):
+    if len(move) == 1:
         if piece == 'pawn' or piece == '':
-            move = (board[0])
+            verbal_move = (MOVES[move[0]])
+            algebraic_move = (move[0])
         else:
-            move = (piece + board[0])
-    elif len(board) == 2:
+            algebraic_move = (piece + move[0])
+            verbal_move = (CHESS_PIECES[piece] + ' to ' + MOVES[move[0]])
+    elif len(move) == 2:
         if piece == 'pawn' or piece == '':
-            move = board[0] + board[1]
+            algebraic_move = move[0] + move[1]
+            verbal_move = (MOVES[move[0]] + MOVES[move[1]])
         else:
-            move = (piece + board[0] + board[1])
+            algebraic_move = (piece + move[0] + move[1])
+            verbal_move = (CHESS_PIECES[piece] + MOVES[move[0]] + MOVES[move[1]])
     else:
-        print(piece, board)
+        print(piece, move)
         return False
-    return move
+    return algebraic_move, verbal_move
 
 
 def showValidMoves(session_url):
@@ -169,7 +185,7 @@ def revertMove(session_url):
             update_board_in_data_base(session_url=session_url, new_board=new_board)
             reply_string = "The Last two moves have been reverted, It's your move"
         except IndexError:
-            reply_string = "There is nothing to be reverted"  
+            reply_string = "There is nothing to revert"
     else:
         reply_string = "You need to Start the game first"
     reply = {"fulfillmentText": reply_string}
@@ -186,41 +202,43 @@ def resignGame(session_url):
 
 
 def makeMove(parameters, session_url):
-    board = parameters['Moves']
+    move = parameters['Moves']
     piece = parameters['ChessPiece']
     special_move = parameters['Specialmoves']
     if special_move == 'short_castle':
-        move = 'O-O'
+        algebraic_move = 'O-O'
+        verbal_move = 'Short Castle'
     elif special_move == 'long_castle':
-        move = 'O-O-O'
+        algebraic_move = 'O-O-O'
+        verbal_move = 'Long Castle'
     else:
-        move = move_generator(piece=piece, board=board)
-        if not move:
+        algebraic_move, verbal_move = move_generator(piece=piece, move=move)
+        if not algebraic_move:
             reply_string = "I didn't understand your move, Please say it again!"
             reply = {"fulfillmentText": reply_string}
             return jsonify(reply)
     board = get_board_from_session_url(session_url=session_url)
     if board:
         try:
-            new_board = chess_engine.make_move(board, move=move)
+            new_board = chess_engine.make_move(board, move=algebraic_move)
         except ValueError:
-            reply_string = "Your move " + move + " is not a valid Move, Please try again "
+            reply_string = "Your move " + str(verbal_move) + " is not a valid Move, Please try again "
             reply = {"fulfillmentText": reply_string}
             return jsonify(reply)
         board_status = chess_engine.validate_board_status(new_board)
         if board_status == 'Checkmate':
-            reply_string = "You Played " + str(move) + ' ' + str(board_status)
+            reply_string = "You Played " + str(verbal_move) + ' ' + str(board_status)
             reply = {"fulfillmentText": reply_string}
             return jsonify(reply)
         engine_level = get_engine_level_from_the_data_base(session_url=session_url)
         engine_move, engine_board = chess_engine.let_the_engine_play(engine_level=engine_level, board=new_board)
         engine_board_status = chess_engine.validate_board_status(engine_board)
         if engine_board_status == 'Checkmate':
-            reply_string = "My Move is " + str(engine_board) + ' ' + str(engine_board_status)
+            reply_string =  "My Move is " + str(engine_board) + ' ' + str(engine_board_status)
             reply = {"fulfillmentText": reply_string}
             return jsonify(reply)
         update_board_in_data_base(session_url=session_url, new_board=engine_board)
-        reply_string = "You Played " + str(move) + ' ' + str(board_status) + "... My Move is " + str(engine_move) + ' ' + str(engine_board_status)
+        reply_string = "You Played " + str(verbal_move) + ' ' + str(board_status) + "... My Move is " + str(engine_move) + ' ' + str(engine_board_status)
     else:
         reply_string = "You need to Start the game first"
     reply = {"fulfillmentText": reply_string}

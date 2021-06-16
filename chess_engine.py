@@ -1,6 +1,6 @@
 import chess
 import chess.engine
-from stockfish import Stockfish
+#from stockfish import Stockfish
 
 STOCK_FISH_LEVEL = {1: 1,
                     2: 4,
@@ -16,7 +16,8 @@ STOCK_FISH_LEVEL = {1: 1,
 
 class ChessEngine(object):
     def __init__(self, engine_path):
-        self.stockfish = Stockfish(engine_path)
+        #self.stockfish = Stockfish(engine_path)
+        self.stockfish = chess.engine.SimpleEngine.popen_uci(engine_path)
 
     def create_game(self):
         board = chess.Board()
@@ -52,8 +53,10 @@ class ChessEngine(object):
         return board
 
     def let_the_engine_play(self, engine_level, board):
-        self.stockfish.set_skill_level(STOCK_FISH_LEVEL[int(engine_level)])
-        self.stockfish.set_fen_position(board.fen())
-        move = self.stockfish.get_best_move_time(1000)
+        #self.stockfish.set_skill_level(STOCK_FISH_LEVEL[int(engine_level)])
+        #self.stockfish.set_fen_position(board.fen())
+        result = self.stockfish.play(board, chess.engine.Limit(time=0.1))
+        #move = self.stockfish.get_best_move_time(1000)
+        move = result.move
         board.push(chess.Move.from_uci(move))
         return move, board

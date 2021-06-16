@@ -112,10 +112,18 @@
       ]
     },
     {
-      "value": "a1",
+      "value": "a8",
       "synonyms": [
         "Alex eight",
         "Anna eight"
+      ]
+    },
+    {
+      "value": "b1",
+      "synonyms": [
+        "Bobby one",
+        "Belia one",
+        "Bela one"
       ]
     },
     {

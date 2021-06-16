@@ -1,0 +1,37 @@
+[
+    {
+        "value": "N",
+        "synonyms": [
+            "knight",
+            "N"
+        ]
+    },
+    {
+        "value": "B",
+        "synonyms": [
+            "Bishop",
+            "B"
+        ]
+    },
+    {
+        "value": "K",
+        "synonyms": [
+            "King",
+            "K"
+        ]
+    },
+    {
+        "value": "Q",
+        "synonyms": [
+            "Queen",
+            "Q"
+        ]
+    },
+    {
+        "value": "R",
+        "synonyms": [
+            "Rook",
+            "R"
+        ]
+    }
+]

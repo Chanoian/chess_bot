@@ -1,0 +1,19 @@
+[
+    {
+        "value": "long_castle",
+        "synonyms": [
+            "long castle",
+            "castle queen side",
+            "castle long"
+        ]
+    },
+    {
+        "value": "short_castle",
+        "synonyms": [
+            "short castle",
+            "castle",
+            "castle king side",
+            "castle short"
+        ]
+    }
+]
