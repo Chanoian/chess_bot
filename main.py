@@ -147,13 +147,24 @@ def delete_row_in_database(session_url):
 
 
 def move_generator(piece, move):
+    print(piece, move)
     if len(move) == 1:
         if piece == 'pawn' or piece == '':
-            verbal_move = (MOVES[move[0]])
-            algebraic_move = (move[0])
+            try:
+                verbal_move = (MOVES[move[0]])
+                algebraic_move = (move[0])
+            except :
+                reply_string = "I didn't understand your move, Please say it again!"
+                reply = {"fulfillmentText": reply_string}
+                return jsonify(reply)
         else:
-            algebraic_move = (piece + move[0])
-            verbal_move = (CHESS_PIECES[piece] + ' to ' + MOVES[move[0]])
+            try:
+                algebraic_move = (piece + move[0])
+                verbal_move = (CHESS_PIECES[piece] + ' to ' + MOVES[move[0]])
+            except:
+                reply_string = "I didn't understand your move, Please say it again!"
+                reply = {"fulfillmentText": reply_string}
+                return jsonify(reply)
     elif len(move) == 2:
         if piece == 'pawn' or piece == '':
             algebraic_move = move[0] + move[1]
@@ -162,7 +173,6 @@ def move_generator(piece, move):
             algebraic_move = (piece + move[0] + move[1])
             verbal_move = (CHESS_PIECES[piece] + MOVES[move[0]] + MOVES[move[1]])
     else:
-        print(piece, move)
         return False
     return algebraic_move, verbal_move
 
@@ -234,7 +244,7 @@ def makeMove(parameters, session_url):
         engine_move, engine_board = chess_engine.let_the_engine_play(engine_level=engine_level, board=new_board)
         engine_board_status = chess_engine.validate_board_status(engine_board)
         if engine_board_status == 'Checkmate':
-            reply_string =  "My Move is " + str(engine_board) + ' ' + str(engine_board_status)
+            reply_string = "My Move is " + str(engine_board) + ' ' + str(engine_board_status)
             reply = {"fulfillmentText": reply_string}
             return jsonify(reply)
         update_board_in_data_base(session_url=session_url, new_board=engine_board)
