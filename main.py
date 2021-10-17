@@ -8,10 +8,10 @@ from chess_engine import ChessEngine
 
 Base = declarative_base()
 app = Flask(__name__)
-db_user = 'root_sql_db'
-db_password = 'chesstoremember'
-db_name = 'chess_games'
-cloud_sql_connection_name = 'chess-bot-cloud-run:us-central1:sql-instance'
+db_user = os.environ["DB_USER"]
+db_pass = os.environ["DB_PASS"]
+db_name = os.environ["DB_NAME"]
+cloud_sql_connection_name = os.environ["CLOUD_SQL_CONN"]
 db_socket_dir = '/cloudsql'
 stockfish_engine_path = "./stockfish_20011801_x64"
 sql_pass = 'oO4EPbGwF5tiCH0e'
@@ -41,7 +41,7 @@ pool = create_engine(
     engine.url.URL(
         drivername="mysql+pymysql",
         username=db_user,  # e.g. "my-database-user"
-        password=db_password,  # e.g. "my-database-password"
+        password=db_pass,  # e.g. "my-database-password"
         database=db_name,  # e.g. "my-database-name"
         query={
             "unix_socket": "{}/{}".format(
