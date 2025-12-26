@@ -14,7 +14,6 @@ db_name = os.environ["DB_NAME"]
 cloud_sql_connection_name = os.environ["CLOUD_SQL_CONN"]
 db_socket_dir = '/cloudsql'
 stockfish_engine_path = "./stockfish_20011801_x64"
-sql_pass = 'oO4EPbGwF5tiCH0e'
 db_config = {
         "pool_size": 5,
         "max_overflow": 2,
